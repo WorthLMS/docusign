@@ -1,5 +1,5 @@
 {
-    "name": "tjphippen/docusign",
+    "name": "worthlms/docusign",
     "description": "DocuSign Rest API Wrapper for Laravel.",
     "keywords": [
         "laravel",
@@ -10,7 +10,7 @@
         "envelope",
         "contracts"
     ],
-    "homepage": "https://github.com/tjphippen/docusign",
+    "homepage": "https://github.com/worthlms/docusign",
     "license": "MIT",
     "authors": [
         {
