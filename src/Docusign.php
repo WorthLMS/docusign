@@ -8,11 +8,11 @@ class Docusign
     private $client;
     private $baseUrl;
 
-    function __construct($config, $clientSettings=[])
+    //function __construct($config, $clientSettings=[])
+    function __construct($settings = [], $clientSettings = [])
     {
-        $this->config = $config;
-        $this->baseUrl = 'https://' . $config['environment']. '.docusign.net/restapi/' . $config['version'] . '/accounts/' . $config['account_id'] . '/';
-        if(array_key_exists('query', $clientSettings)) unset($clientSettings['query']); //don't let some malicious user somehow override our request bodies. 
+        $this->baseUrl = 'https://' . $settings['environment']. '.docusign.net/restapi/' . $settings['version'] . '/accounts/' . $settings['account_id'] . '/';
+        if(array_key_exists('query', $clientSettings)) unset($clientSettings['query']); //don't let some malicious user somehow override our request bodies.
         if(array_key_exists('json', $clientSettings)) unset($clientSettings['json']); //they'd be overwritten anyway, but still.
         $this->client = new Client(array_merge($clientSettings, ['base_uri' => $this->baseUrl, 'headers' => $this->getHeaders()]));
     }
@@ -138,7 +138,7 @@ class Docusign
         $request = $this->client->post('envelopes/' . $envelopeId . '/views/recipient', ['json' => $data]);
         return $view = $this->rawJson($request);
     }
-    
+
     public function createSenderView($envelopeId, $data)
     {
         $request = $this->client->post('envelopes/' . $envelopeId . '/views/sender', ['json' => $data]);
