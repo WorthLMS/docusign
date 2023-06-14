@@ -4,13 +4,14 @@ use GuzzleHttp\Client;
 
 class Docusign
 {
-    private $config;
+    private $settings;
     private $client;
     private $baseUrl;
 
     //function __construct($config, $clientSettings=[])
     function __construct($settings = [], $clientSettings = [])
     {
+        $this->settings = $settings;
         $this->baseUrl = 'https://' . $settings['environment']. '.docusign.net/restapi/' . $settings['version'] . '/accounts/' . $settings['account_id'] . '/';
         if(array_key_exists('query', $clientSettings)) unset($clientSettings['query']); //don't let some malicious user somehow override our request bodies.
         if(array_key_exists('json', $clientSettings)) unset($clientSettings['json']); //they'd be overwritten anyway, but still.
@@ -160,7 +161,7 @@ class Docusign
     public function getHeaders($accept = 'application/json', $contentType = 'application/json')
     {
         return array(
-            'X-DocuSign-Authentication' => '<DocuSignCredentials><Username>' . $this->config['email'] . '</Username><Password>' . $this->config['password'] . '</Password><IntegratorKey>' . $this->config['integrator_key'] . '</IntegratorKey></DocuSignCredentials>',
+            'X-DocuSign-Authentication' => '<DocuSignCredentials><Username>' . $this->settings['email'] . '</Username><Password>' . $this->settings['password'] . '</Password><IntegratorKey>' . $this->settings['integrator_key'] . '</IntegratorKey></DocuSignCredentials>',
             'Accept' => $accept,
             'Content-Type' => $contentType
         );
